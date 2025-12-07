@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Менторство Data Engineer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Менторство по data-инженерии: консультации, мок-собеседования, разбор резюме и план развития."
+  />
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-alt: #0b1020;
+      --accent: #7c5cff;
+      --accent-soft: rgba(124, 92, 255, 0.1);
+      --text: #f5f5f7;
+      --muted: #a1a1b3;
+      --border: #24263a;
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #1d1935 0, #050816 55%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 96px 16px 64px;
+    }
+
+    /* NAVBAR */
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        to bottom,
+        rgba(5, 8, 22, 0.96),
+        rgba(5, 8, 22, 0.90),
+        transparent
+      );
+      border-bottom: 1px solid rgba(36, 38, 58, 0.6);
+    }
+
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-brand {
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      margin-left: auto;
+      display: flex;
+      gap: 14px;
+      font-size: 14px;
+      color: var(--muted);
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      padding: 4px 10px;
+      border-radius: 999px;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .nav-links a:hover {
+      background: var(--accent-soft);
+      color: var(--text);
+    }
+
+    /* HERO */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.3fr);
+      gap: 32px;
+      align-items: center;
+      margin-top: 32px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 12px;
+      border-radius: 999px;
+      background: rgba(15, 185, 129, 0.1);
+      color: #7de2b8;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #56e39f;
+      box-shadow: 0 0 12px rgba(86, 227, 159, 0.9);
+    }
+
+    .hero-title {
+      font-size: clamp(28px, 4vw, 34px);
+      font-weight: 700;
+      margin: 0 0 10px;
+    }
+
+    .hero-highlight {
+      color: var(--accent);
+    }
+
+    .hero-subtitle {
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 480px;
+      margin-bottom: 18px;
+    }
+
+    .hero-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .hero-list li {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .hero-list-bullet {
+      width: 14px;
+      height: 14px;
+      margin-top: 4px;
+      border-radius: 4px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(124, 92, 255, 0.5);
+      flex-shrink: 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 9px 18px;
+      font-size: 14px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease,
+        border-color 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #7c5cff, #c074ff);
+      box-shadow: var(--shadow-soft);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.6);
+    }
+
+    .btn-ghost {
+      border-color: rgba(124, 92, 255, 0.5);
+      color: var(--text);
+      background: rgba(7, 9, 28, 0.9);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(12, 16, 45, 0.95);
+    }
+
+    .hero-card {
+      background: radial-gradient(circle at top left, #22244a 0, #0b1020 55%);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(90, 92, 156, 0.7);
+      padding: 20px 20px 18px;
+      box-shadow: var(--shadow-soft);
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .hero-card-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #c3c4ff;
+      margin-bottom: 4px;
+    }
+
+    .hero-card-big {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .hero-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .tag {
+      padding: 2px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(122, 125, 200, 0.7);
+      font-size: 11px;
+      color: #d0d0ff;
+      background: rgba(15, 18, 46, 0.8);
+    }
+
+    /* SECTIONS */
+
+    .section {
+      margin-bottom: 40px;
+      padding: 24px 18px 22px;
+      border-radius: var(--radius-lg);
+      background: rgba(7, 10, 32, 0.96);
+      border: 1px solid var(--border);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .section-kicker {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .section p {
+      margin: 0 0 8px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .section strong {
+      color: #e5e5ff;
+      font-weight: 500;
+    }
+
+    /* LISTS & GRID */
+
+    .list-dot {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .list-dot li {
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 6px;
+    }
+
+    .list-dot li::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 8px;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 700px) {
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      padding: 14px 14px 12px;
+      border-radius: 14px;
+      background: rgba(10, 13, 35, 0.96);
+      border: 1px solid rgba(48, 52, 92, 0.9);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .card-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(124, 92, 255, 0.16);
+      border: 1px solid rgba(124, 92, 255, 0.5);
+      color: #d6d2ff;
+      margin-bottom: 6px;
+    }
+
+    /* FAQ */
+
+    .faq-item + .faq-item {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(66, 69, 110, 0.9);
+    }
+
+    .faq-q {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .faq-a {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* FOOTER */
+
+    .footer {
+      margin-top: 32px;
+      padding: 12px 0 40px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .footer a {
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 3px;
+    }
+  </style>
+</head>
+<body>
+  <!-- НАВИГАЦИЯ -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        Data Engineer · менторство
+      </div>
+      <nav class="nav-links">
+        <a href="#about">О себе</a>
+        <a href="#help">С чем помогаю</a>
+        <a href="#formats">Форматы</a>
+        <a href="#process">Как проходит</a>
+        <a href="#testimonials">Отзывы</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- HERO / TL;DR -->
+    <section class="hero" id="top">
+      <div>
+        <div class="pill">
+          <span class="pill-dot"></span>
+          Менторство для дата-инженеров
+        </div>
+        <h1 class="hero-title">
+          Помогаю войти и вырасти в
+          <span class="hero-highlight">data-инженерии</span>
+        </h1>
+        <p class="hero-subtitle">
+          Я Tech Lead Data Engineer с опытом собеседований и менторства.
+          Помогаю понять рынок, подготовиться к собеседованиям и выстроить план
+          роста в профессии.
+        </p>
+        <ul class="hero-list">
+          <li>
+            <div class="hero-list-bullet"></div>
+            <div>Разбираем твою ситуацию: цели, опыт, ограничения.</div>
+          </li>
+          <li>
+            <div class="hero-list-bullet"></div>
+            <div>Составляем честный план: от “что учить” до “как искать офферы”.</div>
+          </li>
+          <li>
+            <div class="hero-list-bullet"></div>
+            <div>Тренируем собесы, резюме и разговор о деньгах.</div>
+          </li>
+        </ul>
+        <div class="hero-actions">
+          <a href="https://t.me/USERNAME" class="btn btn-primary">
+            Написать в Telegram
+          </a>
+          <a href="#formats" class="btn btn-ghost">Посмотреть форматы</a>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <div class="hero-card-title">TL;DR</div>
+        <div class="hero-card-big">
+          Консультации, мок-собеседования и менторство для data-инженеров.
+        </div>
+        <p>
+          Если не хочется читать весь текст — достаточно написать мне пару строк
+          в Telegram: где ты сейчас, чего хочешь и чем я могу быть полезен. Я
+          отвечу, сможем ли и как лучше поработать.
+        </p>
+        <div class="hero-card-tags">
+          <span class="tag">Подготовка к собеседованиям</span>
+          <span class="tag">Переход в data-инженерию</span>
+          <span class="tag">Увеличение дохода</span>
+        </div>
+      </aside>
+    </section>
+
+    <!-- О СЕБЕ -->
+    <section class="section" id="about">
+      <div class="section-kicker">О себе</div>
+      <h2 class="section-title">Кто я и чем занимаюсь</h2>
+      <p>
+        В дата-инженерии я более N лет. Стартовал(а) как
+        <strong>дата-аналитик</strong>, постепенно ушёл(ушла) в построение
+        пайплайнов и инфраструктуры данных. Сейчас работаю
+        <strong>Tech Lead Data Engineer</strong> и участвую в подборе
+        специалистов на разных уровнях.
+      </p>
+      <p>
+        За время работы провёл(а) много собеседований, вижу типичные ошибки
+        кандидатов и знаю, что действительно проверяют на разных этапах:
+        технических, продуктовых, культурных.
+      </p>
+      <p>
+        Несколько лет занимаюсь менторством: помогаю ребятам сменить сферу,
+        перейти из аналитики в data-инженерию, вырасти до middle/senior и
+        почувствовать себя увереннее на рынке.
+      </p>
+    </section>
+
+    <!-- С ЧЕМ МОГУ ПОМОЧЬ -->
+    <section class="section" id="help">
+      <div class="section-kicker">Запросы</div>
+      <h2 class="section-title">С чем я могу помочь</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Вход в data-инженерию</div>
+          <ul class="list-dot">
+            <li>Ты в аналитике / разработке и думаешь, как перейти в DE.</li>
+            <li>Не понимаешь, какие именно скиллы нужны и в каком порядке.</li>
+            <li>Нужна честная оценка текущего уровня и понятный план.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">Подготовка к собеседованию</div>
+          <ul class="list-dot">
+            <li>Мок-собеседование “как в жизни” на позицию data engineer.</li>
+            <li>Разбор технических и продуктовых вопросов.</li>
+            <li>Фидбек по ответам, пробелам и коммуникации.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">Рост и повышение дохода</div>
+          <ul class="list-dot">
+            <li>Понимаем, куда расти: стек, зоны ответственности, софт-скиллы.</li>
+            <li>Разбираем, как просить повышение или менять работу.</li>
+            <li>Готовим тебя к разговору о вилках и офферах.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">Поддержка и “разруливание”</div>
+          <ul class="list-dot">
+            <li>Синдром самозванца, выгорание, “я ничего не умею”.</li>
+            <li>Сложные ситуации на работе: задачи, менеджер, команда.</li>
+            <li>План действий, чтобы перестать застревать.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ФОРМАТЫ -->
+    <section class="section" id="formats">
+      <div class="section-kicker">Форматы работы</div>
+      <h2 class="section-title">Как мы можем поработать</h2>
+      <div class="grid-2">
+        <div class="card">
+          <span class="badge">Разовая консультация</span>
+          <div class="card-title">Созвон 60–90 минут</div>
+          <p>
+            Разбираем конкретный вопрос: выбор стеков, план перехода,
+            разбор текущего опыта, карьерная стратегия. В конце созвона — summary
+            и “домашка”.
+          </p>
+        </div>
+        <div class="card">
+          <span class="badge">Мок-собеседование</span>
+          <div class="card-title">Собес как в компании</div>
+          <p>
+            Проводим интервью под нужный грейд: junior/middle/senior. Сначала
+            собес, потом подробный фидбек по каждому блоку и план закрытия
+            пробелов.
+          </p>
+        </div>
+        <div class="card">
+          <span class="badge">Менторство</span>
+          <div class="card-title">Ведение 1–2 месяца</div>
+          <p>
+            Серия созвонов + сопровождение между ними: чек-листы, задачи,
+            ревью прогресса. Подходит, если нужен системный рост, а не один
+            разговор.
+          </p>
+        </div>
+        <div class="card">
+          <span class="badge">Дополнительно</span>
+          <div class="card-title">Резюме, профиль, сопроводительные</div>
+          <p>
+            Разбор резюме, профилей (LinkedIn, HH и т.п.), сопроводительных.
+            Фокус на том, как это воспринимает нанимающая сторона.
+          </p>
+        </div>
+      </div>
+      <p style="margin-top: 10px; font-size: 13px; color: var(--muted);">
+        <strong>Цены и формат</strong> обсуждаем в переписке — напиши, что тебе
+        сейчас актуально, и я предложу варианты.
+      </p>
+    </section>
+
+    <!-- КАК ПРОХОДИТ РАБОТА -->
+    <section class="section" id="process">
+      <div class="section-kicker">Процесс</div>
+      <h2 class="section-title">Как обычно проходят консультации</h2>
+      <ol class="list-dot" style="list-style: none;">
+        <li>
+          <strong>Знакомство в переписке.</strong> Пишешь пару сообщений: кто ты,
+          на каком уровне и чего хочешь добиться.
+        </li>
+        <li>
+          <strong>Определяем формат.</strong> Понимаем, достаточно одной
+          консультации, нужен ли мок-собес или серия созвонов.
+        </li>
+        <li>
+          <strong>Созвон.</strong> Работаем по твоей повестке, но я задаю
+          уточняющие вопросы и направляю, если вижу слепые зоны.
+        </li>
+        <li>
+          <strong>Резюме встречи.</strong> В конце фиксируем основные выводы,
+          шаги и ресурсы, к которым стоит вернуться.
+        </li>
+      </ol>
+    </section>
+
+    <!-- ОТЗЫВЫ -->
+    <section class="section" id="testimonials">
+      <div class="section-kicker">Отзывы</div>
+      <h2 class="section-title">Что говорят ребята после созвонов</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">“Стало понятно, куда двигаться”</div>
+          <p>
+            “За один созвон мы разложили по полочкам, какие навыки мне уже
+            хватает до middle, а что нужно подтянуть. После консультации я
+            перестал хаотично проходить курсы и стал двигаться по понятному
+            плану.”
+          </p>
+          <p style="font-size: 12px; color: var(--muted);">
+            — А., аналитик → data engineer
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">“Мок-собес оказался полезнее реальных”</div>
+          <p>
+            “На мок-собеседовании было сложнее, чем на настоящих собесах,
+            зато после фидбека я понимала, что исправлять. В итоге получила два
+            оффера и смогла спокойно торговаться по вилке.”
+          </p>
+          <p style="font-size: 12px; color: var(--muted);">
+            — М., junior → middle data engineer
+          </p>
+        </div>
+      </div>
+      <p style="margin-top: 10px; font-size: 13px; color: var(--muted);">
+        Хочешь оставить отзыв или спросить, могу ли помочь в твоём кейсе? Напиши
+        мне в Telegram.
+      </p>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="section-kicker">FAQ</div>
+      <h2 class="section-title">Частые вопросы</h2>
+      <div class="faq-item">
+        <div class="faq-q">Нужен ли мне уже опыт в данных, чтобы прийти?</div>
+        <div class="faq-a">
+          Не обязательно. Важно, чтобы у тебя была честная картинка: чем ты
+          уже занимался, что пробовал, какие темы даются легче/сложнее. На
+          созвоне разберёмся, откуда стартовать.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Гарантируешь ли ты оффер / рост зарплаты?</div>
+        <div class="faq-a">
+          Я не продаю “гарантированный оффер”. Моя зона ответственности —
+          честный фидбек, план и помощь в подготовке. Результат зависит и от
+          твоих действий между созвонами.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Можем ли мы поработать анонимно?</div>
+        <div class="faq-a">
+          Да, можно не называть компанию и реальные имена, если так комфортнее.
+          Главное — чтобы у меня было достаточно контекста, чтобы помочь.
+        </div>
+      </div>
+    </section>
+
+    <!-- КОНТАКТЫ -->
+    <section class="section" id="contacts">
+      <div class="section-kicker">Контакты</div>
+      <h2 class="section-title">Если откликается — пиши</h2>
+      <p>
+        Расскажи в двух–трёх сообщениях:
+        <strong>кто ты, где сейчас и чего хочешь добиться</strong>. Я отвечу,
+        могу ли помочь, и предложу формат.
+      </p>
+      <ul class="list-dot">
+        <li>
+          Telegram:
+          <a href="https://t.me/USERNAME" target="_blank" rel="noopener">
+            @USERNAME
+          </a>
+        </li>
+        <li>Email: <a href="mailto:you@example.com">you@example.com</a></li>
+        <li>
+          GitHub:
+          <a href="https://github.com/YOUR_GITHUB" target="_blank" rel="noopener">
+            github.com/YOUR_GITHUB
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      Сделано на GitHub Pages · Обновлено вручную ·
+      <a href="#top">Наверх</a>
+    </footer>
+  </main>
+</body>
+</html>
