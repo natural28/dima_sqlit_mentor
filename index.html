@@ -1,758 +1,383 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Менторство Data-analyst</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="Менторство по data-аналитике: консультации, мок-собеседования, разбор резюме и план развития."
-  />
+  <meta charset="UTF-8">
+  <title>Дима SQL-ит | Менторство Data Analyst</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    /* --- НАСТРОЙКИ --- */
     :root {
-      --bg: #050816;
-      --bg-alt: #0b1020;
-      --accent: #7c5cff;
-      --accent-soft: rgba(124, 92, 255, 0.1);
-      --text: #f5f5f7;
-      --muted: #a1a1b3;
-      --border: #24263a;
-      --radius-lg: 18px;
-      --radius-xl: 26px;
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
-    }
-
-    * {
-      box-sizing: border-box;
+      --bg-dark: #050507;
+      --text-main: #b4bacf;
+      --text-header: #ffffff;
+      
+      --accent-gradient: linear-gradient(135deg, #a45eff 0%, #4f46e5 100%);
+      --accent-color: #a45eff;
+      
+      --price-old: #6e7681;
+      --radius: 20px;
     }
 
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
-      background: radial-gradient(circle at top, #1d1935 0, #050816 55%);
-      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-dark);
+      background-image: radial-gradient(circle at 50% -20%, #2e1065 0%, #050507 60%);
+      background-attachment: fixed;
+      color: var(--text-main);
       line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { text-decoration: none; color: inherit; transition: 0.3s; }
+    ul { list-style: none; padding: 0; margin: 0; }
+    * { box-sizing: border-box; }
 
-
-    .link-accent {
-      color: #8e9afe;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      font-weight: 500;
-    }
-
-    .link-accent:hover,
-    .link-accent:focus {
-      color: #c4c8ff;
-      text-decoration-thickness: 2px;
-    }
-
-
-    .page {
-      max-width: 960px;
+    .container {
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 96px 16px 64px;
+      padding: 0 20px;
+      width: 100%;
     }
 
-    /* NAVBAR */
-
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(18px);
-      background: linear-gradient(
-        to bottom,
-        rgba(5, 8, 22, 0.96),
-        rgba(5, 8, 22, 0.90),
-        transparent
-      );
-      border-bottom: 1px solid rgba(36, 38, 58, 0.6);
+    /* --- HERO СЕКЦИЯ --- */
+    .hero {
+      text-align: center;
+      padding-top: 80px;
+      padding-bottom: 60px;
     }
 
-    .nav-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .nav-brand {
-      font-weight: 600;
-      font-size: 15px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .nav-links {
-      margin-left: auto;
-      display: flex;
-      gap: 14px;
-      font-size: 14px;
-      color: var(--muted);
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      padding: 4px 10px;
-      border-radius: 999px;
-      transition: background 0.15s ease, color 0.15s ease;
-    }
-
-    .nav-links a:hover {
-      background: var(--accent-soft);
-      color: var(--text);
-    }
-
-    /* HERO */
-    
-    /* самый рабочий вариант */
-    /* .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.3fr);
-      gap: 32px;
-      align-items: center;
-      margin-top: 32px;
-      margin-bottom: 40px;
-    } */
-
-      .hero {
-    max-width: 900px;
-    margin: 32px auto 36px;
-    padding: 0 16px;
-  }
-
-
-    /* рабочий вариант
-    @media (max-width: 768px) {
-      .hero {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    } */
-
-  /* новый вариант */
-  @media (max-width: 640px) {
-  .nav-inner {
-    padding: 10px 12px;
-    flex-direction: column;      /* бренд сверху, меню ниже */
-    align-items: flex-start;
-    gap: 6px;
-  }
-
-  .nav-brand {
-    font-size: 14px;
-  }
-
-  .nav-links {
-    margin-left: 0;
-    width: 100%;
-    display: flex;
-    gap: 12px;
-    font-size: 13px;
-    overflow-x: auto;           /* если не влезает – можно проскроллить по горизонтали */
-    white-space: nowrap;
-    padding-bottom: 4px;
-  }
-
-  .nav-links a {
-    padding: 4px 0;             /* уберём лишнюю “таблетку” вокруг пункта */
-  }
-}
-
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 3px 12px;
-      border-radius: 999px;
-      background: rgba(15, 185, 129, 0.1);
-      color: #7de2b8;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .pill-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: #56e39f;
-      box-shadow: 0 0 12px rgba(86, 227, 159, 0.9);
-    }
-
-    .hero-title {
-      font-size: clamp(28px, 4vw, 34px);
-      font-weight: 700;
-      margin: 0 0 10px;
-    }
-
-    .hero-highlight {
-      color: var(--accent);
-    }
-
-    .hero-subtitle {
-      color: var(--muted);
-      font-size: 15px;
-      max-width: 480px;
-      margin-bottom: 18px;
-    }
-
-    .hero-list {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 22px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .hero-list li {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-
-    .hero-list-bullet {
-      width: 14px;
-      height: 14px;
-      margin-top: 4px;
-      border-radius: 4px;
-      background: var(--accent-soft);
-      border: 1px solid rgba(124, 92, 255, 0.5);
-      flex-shrink: 0;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .btn {
-      border-radius: 999px;
-      padding: 9px 18px;
-      font-size: 14px;
-      border: 1px solid transparent;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease,
-        border-color 0.15s ease;
-      text-decoration: none;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #7c5cff, #c074ff);
-      box-shadow: var(--shadow-soft);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.6);
-    }
-
-    .btn-ghost {
-      border-color: rgba(124, 92, 255, 0.5);
-      color: var(--text);
-      background: rgba(7, 9, 28, 0.9);
-    }
-
-    .btn-ghost:hover {
-      background: rgba(12, 16, 45, 0.95);
-    }
-
-    .hero-card {
-      background: radial-gradient(circle at top left, #22244a 0, #0b1020 55%);
-      border-radius: var(--radius-xl);
-      border: 1px solid rgba(90, 92, 156, 0.7);
-      padding: 20px 20px 18px;
-      box-shadow: var(--shadow-soft);
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .hero-card-title {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #c3c4ff;
-      margin-bottom: 4px;
-    }
-
-    .hero-card-big {
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .hero-card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
-    }
-
-    .tag {
-      padding: 2px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(122, 125, 200, 0.7);
-      font-size: 11px;
-      color: #d0d0ff;
-      background: rgba(15, 18, 46, 0.8);
-    }
-
-    /* SECTIONS */
-
-    .section {
-      margin-bottom: 40px;
-      padding: 24px 18px 22px;
-      border-radius: var(--radius-lg);
-      background: rgba(7, 10, 32, 0.96);
-      border: 1px solid var(--border);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
-    }
-
-    .section-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin-top: 0;
-      margin-bottom: 10px;
-    }
-
-    .section-kicker {
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-size: 11px;
-      color: var(--muted);
-      margin-bottom: 4px;
-    }
-
-    .section p {
-      margin: 0 0 8px;
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .section strong {
-      color: #e5e5ff;
-      font-weight: 500;
-    }
-
-    /* LISTS & GRID */
-
-    .list-dot {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .list-dot li {
+    .avatar-wrapper {
       position: relative;
-      padding-left: 18px;
-      margin-bottom: 6px;
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 24px;
     }
 
-    .list-dot li::before {
-      content: "";
+    .avatar-glow {
       position: absolute;
-      left: 4px;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--accent);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: var(--accent-gradient);
+      filter: blur(25px);
+      opacity: 0.6;
+      z-index: 0;
     }
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .avatar {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255,255,255,0.1); 
+      z-index: 1;
+      background: #111;
+    }
+
+    .hero-name {
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--text-header);
+      margin: 0 0 24px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-name span {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* --- БЛОК С ОПЫТОМ --- */
+    .hero-facts {
+      margin: 0 auto 36px auto;
+      max-width: 620px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .fact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      text-align: left;
+    }
+    
+    .fact-icon { 
+      width: 24px;
+      text-align: center;
+      font-size: 20px; 
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    
+    .fact-text {
+      color: #d1d5db;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .fact-highlight { color: #fff; font-weight: 600; }
+
+    /* --- КНОПКИ --- */
+    .buttons-wrapper {
+      display: flex;
+      justify-content: center;
       gap: 16px;
+      flex-wrap: wrap;
     }
 
-    @media (max-width: 700px) {
-      .grid-2 {
-        grid-template-columns: minmax(0, 1fr);
-      }
+    .btn-main {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-gradient);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 16px;
+      box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.5);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .btn-main:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 15px 35px -5px rgba(124, 58, 237, 0.7);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 16px;
+      border: 1px solid rgba(164, 94, 255, 0.6);
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+      background: rgba(164, 94, 255, 0.15);
+      border-color: #a45eff;
+      transform: translateY(-3px);
+    }
+
+    /* --- СЕКЦИЯ УСЛУГ --- */
+    .section-title {
+      text-align: center;
+      font-size: 26px;
+      color: var(--text-header);
+      margin-bottom: 40px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 80px;
     }
 
     .card {
-      padding: 14px 14px 12px;
-      border-radius: 14px;
-      background: rgba(10, 13, 35, 0.96);
-      border: 1px solid rgba(48, 52, 92, 0.9);
-      font-size: 13px;
-      color: var(--muted);
+      background: linear-gradient(160deg, rgba(30, 30, 40, 0.6) 0%, rgba(20, 20, 25, 0.8) 100%);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
     }
 
+    .card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(164, 94, 255, 0.5);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 
+                  0 0 20px rgba(164, 94, 255, 0.1) inset;
+    }
+
+    .card-icon { font-size: 32px; margin-bottom: 16px; }
+    
     .card-title {
-      font-weight: 600;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-header);
+      margin: 0 0 10px;
+    }
+
+    .card-text {
+      font-size: 14px;
+      color: #9ca3af;
+      margin-bottom: 24px;
+      flex-grow: 1;
+      line-height: 1.5;
+    }
+
+    .price-block {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
       margin-bottom: 4px;
-      color: var(--text);
-      font-size: 14px;
     }
 
-    .badge {
-      display: inline-block;
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(124, 92, 255, 0.16);
-      border: 1px solid rgba(124, 92, 255, 0.5);
-      color: #d6d2ff;
-      margin-bottom: 6px;
-    }
+    .price-current { font-size: 22px; font-weight: 700; color: #fff; }
+    .price-old { text-decoration: line-through; color: var(--price-old); font-size: 15px; }
+    .price-note { font-size: 12px; color: #a45eff; display: block; margin-top: 4px; }
 
-    /* FAQ */
-
-    .faq-item + .faq-item {
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px dashed rgba(66, 69, 110, 0.9);
-    }
-
-    .faq-q {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 2px;
-    }
-
-    .faq-a {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    /* FOOTER */
-
-    .footer {
-      margin-top: 32px;
-      padding: 12px 0 40px;
-      font-size: 12px;
-      color: var(--muted);
+    .btn-card {
+      display: block;
+      width: 100%;
       text-align: center;
+      margin-top: 16px;
+      padding: 10px 0;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      font-weight: 500;
+      font-size: 14px;
+      border: 1px solid rgba(255,255,255,0.05);
     }
+    .btn-card:hover { background: rgba(255,255,255,0.1); }
 
-    .footer a {
-      text-decoration: underline;
-      text-decoration-style: dotted;
-      text-underline-offset: 3px;
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 40px 20px;
+      color: #6b7280;
+      font-size: 13px;
+    }
+    footer a:hover { color: #fff; }
+
+    @media (max-width: 600px) {
+      .hero-name { font-size: 32px; }
+      .grid { grid-template-columns: 1fr; }
+      .hero-facts { padding: 0 10px; }
+      .buttons-wrapper { flex-direction: column; align-items: stretch; padding: 0 40px; }
     }
   </style>
 </head>
 <body>
-  <!-- НАВИГАЦИЯ -->
-  <header class="nav">
-    <div class="nav-inner">
-      <div class="nav-brand">
-        dima_sqlit
+
+  <div class="container">
+    
+    <section class="hero">
+      <div class="avatar-wrapper">
+        <div class="avatar-glow"></div>
+        <img src="photo.png" alt="Дима SQL-ит" class="avatar">
       </div>
-      <nav class="nav-links">
-        <a href="#about">О себе</a>
-        <a href="#help">С чем помогаю</a>
-        <a href="#formats">Форматы</a>
-        <a href="#process">Как проходит</a>
-        <!-- <a href="#testimonials">Отзывы</a> -->
-        <a href="#faq">FAQ</a>
-        <a href="#contacts">Контакты</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="page">
-    <!-- HERO / TL;DR -->
-    <section class="hero" id="top">
-      <div>
-        <div class="pill">
-          <span class="pill-dot"></span>
-          Менторство для дата-аналитиков
-        </div>
-        <h1 class="hero-title">
-          Помогаю войти и вырасти в
-          <span class="hero-highlight">data-аналитике</span>
-        </h1>
-        <p class="hero-subtitle">
-          Я Data Analyst с опытом собеседований и менторства.
-          Помогаю понять рынок, подготовиться к собеседованиям и выстроить план
-          роста в профессии.
-        </p>
-
-        <ul class="hero-list">
-          <li>
-            <div class="hero-list-bullet"></div>
-            <div>Разбираем твою ситуацию: цели, опыт, ограничения.</div>
-          </li>
-          <li>
-            <div class="hero-list-bullet"></div>
-            <div>Составляем честный план: от “что учить” до “как искать офферы”.</div>
-          </li>
-          <li>
-            <div class="hero-list-bullet"></div>
-            <div>Тренируем собесы, резюме и разговор о деньгах.</div>
-          </li>
-        </ul>
-        <div class="hero-actions">
-          <a href="https://t.me/catdem" class="btn btn-primary">
-            Написать в Telegram
-          </a>
-          <a href="#formats" class="btn btn-ghost">Посмотреть форматы</a>
-        </div>
-      </div>
-
-      <!-- <aside class="hero-card">
-        <div class="hero-card-title"></div>
-        <div class="hero-card-big">
-          Консультации, мок-собеседования и менторство для data-аналитиков.
-        </div>
-        <p>
-          Если не хочется читать весь текст — достаточно написать мне пару строк
-          в Telegram: где ты сейчас, чего хочешь и чем я могу быть полезен. Я
-          отвечу, сможем ли и как лучше поработать.
-        </p>
-        <div class="hero-card-tags">
-          <span class="tag">Подготовка к собеседованиям</span>
-          <span class="tag">Переход в data-инженерию</span>
-          <span class="tag">Увеличение дохода</span>
-        </div>
-      </aside> -->
-    </section>
-
-    <!-- О СЕБЕ -->
-    <section class="section" id="about">
-      <div class="section-kicker">О себе</div>
-      <h2 class="section-title">Кто я и чем занимаюсь</h2>
-      <p>
-        • Работаю дата-аналитиком в Wildberries 🟣 — строю дашборды, автоматизирую ad-hoc задачи и провожу аналитические исследования.
-        <br>
-        • Ранее занимался аналитикой и автоматизацией в МТС Travel ✈️
-        <br>
-        • Обучаю коллег работе с данными и менторю аналитиков. 📊
-        <br>
-        • Веду блог в Telegram 
-        <a href="https://t.me/dima_sqlit" target="_blank" class="link-accent">
-          «Дима SQL-ит 🧑‍💻 (Аналитика данных)»
-        </a>, где делюсь разбором задач и опытом в аналитике.
-      </p>
       
-    </section>
+      <h1 class="hero-name">Дима <span>SQL-ит</span></h1>
+      
+      <div class="hero-facts">
+        <div class="fact-item">
+           <div class="fact-icon">🟣</div> 
+           <div class="fact-text">
+             Работаю Data Analyst в <span class="fact-highlight">Wildberries</span>. Строю дашборды, автоматизирую ad-hoc задачи и провожу исследования.
+           </div>
+        </div>
+        
+        <div class="fact-item">
+           <div class="fact-icon">✈️</div> 
+           <div class="fact-text">
+             Ранее строил отчетность и занимался автоматизацией в <span class="fact-highlight">MTS Travel</span>.
+           </div>
+        </div>
 
-    <!-- С ЧЕМ МОГУ ПОМОЧЬ -->
-    <section class="section" id="help">
-      <div class="section-kicker">Запросы</div>
-      <h2 class="section-title">С чем я могу помочь</h2>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-title">Вход в data-аналитику</div>
-          <ul class="list-dot">
-            <li>Ты хочешь перейти в аналитическую сферу и не понимаешь, с чего начать</li>
-            <li>Не понимаешь, какие навыки нужны: SQL, Python, продуктовые метрики, визуализация.</li>
-            <li>Нужна честная оценка текущего уровня и понятный план как двигаться дальше.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="card-title">Подготовка к собеседованию</div>
-          <ul class="list-dot">
-            <li>Мок-собеседование “как в компании” на позицию: Аналитика Данных.</li>
-            <li>Разбор технических и продуктовых вопросов.</li>
-            <li>Фидбек по ответам, пробелам и коммуникации.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="card-title">Рост и повышение дохода</div>
-          <ul class="list-dot">
-            <li>Понимаем, куда расти: стек, зоны ответственности, софт-скиллы.</li>
-            <li>Разбираем, как просить повышение или менять работу.</li>
-            <li>Готовим тебя к разговору о вилках и офферах.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <div class="card-title">Поддержка и “разруливание”</div>
-          <ul class="list-dot">
-            <li>Синдром самозванца, выгорание, “я ничего не умею”.</li>
-            <li>Сложные ситуации на работе: задачи, менеджер, команда.</li>
-            <li>План действий, чтобы перестать застревать.</li>
-          </ul>
+        <div class="fact-item">
+           <div class="fact-icon">🎓</div> 
+           <div class="fact-text">
+             Обучаю коллег, менторю аналитиков и веду канал <span class="fact-highlight">"Дима SQL-ит"</span> (1200+ подписчиков).
+           </div>
         </div>
       </div>
+
+      <div class="buttons-wrapper">
+        <a href="https://t.me/catdem" class="btn-main">
+            Telegram для связи
+        </a>
+        <a href="https://t.me/dima_sqlit" target="_blank" class="btn-outline">
+          Telegram-канал
+        </a>
+      </div>
+
     </section>
 
-    <!-- ФОРМАТЫ -->
-    <section class="section" id="formats">
-      <div class="section-kicker">Форматы работы</div>
-      <h2 class="section-title">Как мы можем поработать</h2>
-      <div class="grid-2">
-        <div class="card">
-          <span class="badge">Разовая консультация</span>
-          <div class="card-title">Созвон 60–90 минут</div>
-          <p>
-            Разбираем конкретный вопрос: выбор стеков, план перехода,
-            разбор текущего опыта, карьерная стратегия.
-          </p>
+    <h2 class="section-title">Форматы работы</h2>
+    
+    <div class="grid">
+      
+      <article class="card">
+        <div class="card-icon">🚀</div>
+        <h3 class="card-title">Разовая консультация</h3>
+        <p class="card-text">
+          Идеально, если застрял и нужен "взгляд сверху", оценка уровня или конкретный план перехода в аналитику.
+        </p>
+        <div class="price-block">
+          <div class="price-row">
+            <span class="price-current">5 000 ₽</span>
+            <span class="price-old">6 000 ₽</span>
+          </div>
+          <a href="https://t.me/catdem" class="btn-card">Записаться</a>
         </div>
-        <div class="card">
-          <span class="badge">Мок-собеседование</span>
-          <div class="card-title">Собес как в компании</div>
-          <p>
-            Проводим интервью под нужный грейд: junior/middle/senior. Сначала
-            собес, потом подробный фидбек по каждому блоку и план закрытия
-            пробелов.
-          </p>
-        </div>
-        <div class="card">
-          <span class="badge">Менторство</span>
-          <div class="card-title">Индивидуальное ведение по запросу</div>
-          <p>
-            Серия созвонов с поддержкой между ними: даю материалы для изучения, разбираем задачи, даю фидбек по прогрессу. Подходит, если нужен системный рост, а не разовая консультация.
-          </p>
-        </div>
-        <div class="card">
-          <span class="badge">Дополнительно</span>
-          <div class="card-title">Резюме, профиль, сопроводительные</div>
-          <p>
-            Разбор резюме, профилей (headhunter и т.п.), сопроводительных.
-            Фокус на том, как это воспринимает нанимающая сторона.
-          </p>
-        </div>
-      </div>
-      <p style="margin-top: 10px; font-size: 13px; color: var(--muted);">
-        <strong>Цены и формат</strong> обсуждаем в переписке — напиши, что тебе
-        сейчас актуально, и я предложу варианты.
-      </p>
-    </section>
+      </article>
 
-    <!-- КАК ПРОХОДИТ РАБОТА -->
-    <section class="section" id="process">
-      <div class="section-kicker">Процесс</div>
-      <h2 class="section-title">Как обычно проходят консультации</h2>
-      <ol class="list-dot" style="list-style: none;">
-        <li>
-          <strong>Знакомство в переписке.</strong> Пишешь пару сообщений: кто ты,
-          на каком уровне и чего хочешь добиться.
-        </li>
-        <li>
-          <strong>Определяем формат.</strong> Понимаем, достаточно одной
-          консультации, нужен ли мок-собес или серия созвонов.
-        </li>
-        <li>
-          <strong>Созвон.</strong> Работаем по твоей повестке, но я задаю
-          уточняющие вопросы и направляю, если вижу слепые зоны.
-        </li>
-        <li>
-          <strong>Резюме встречи.</strong> В конце фиксируем основные выводы,
-          шаги и ресурсы, к которым стоит вернуться.
-        </li>
-      </ol>
-    </section>
+      <article class="card">
+        <div class="card-icon">⚔️</div>
+        <h3 class="card-title">Мок-собеседование</h3>
+        <p class="card-text">
+          Жесткий прогон по SQL, Python и задачам. Атмосфера реального собеса.
+          Подробный фидбек: где провал, что учить, как отвечать лучше.
+        </p>
+        <div class="price-block">
+          <div class="price-row">
+            <span class="price-current">6 000 ₽</span>
+            <span class="price-old">8 000 ₽</span>
+          </div>
+          <a href="https://t.me/catdem" class="btn-card">Записаться</a>
+        </div>
+      </article>
 
-    <!-- ОТЗЫВЫ -->
-    <!-- <section class="section" id="testimonials">
-      <div class="section-kicker">Отзывы</div>
-      <h2 class="section-title">Что говорят ребята после созвонов</h2>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-title">“Стало понятно, куда двигаться”</div>
-          <p>
-            “За один созвон мы разложили по полочкам, какие навыки мне уже
-            хватает до middle, а что нужно подтянуть. После консультации я
-            перестал хаотично проходить курсы и стал двигаться по понятному
-            плану.”
-          </p>
-          <p style="font-size: 12px; color: var(--muted);">
-            — А., аналитик → data engineer
-          </p>
+      <article class="card">
+        <div class="card-icon">📈</div>
+        <h3 class="card-title">Менторство до оффера</h3>
+        <p class="card-text">
+          Системная работа. План обучения, домашки, код-ревью и поддержка 24/7.
+          Веду тебя за руку до трудоустройства.
+        </p>
+        <div class="price-block">
+          <div class="price-row">
+            <span class="price-current">30 000 ₽</span>
+            <span style="font-size: 13px; color: #fff; opacity: 0.7;">(предоплата)</span>
+          </div>
+          <span class="price-note">+ 100–150% от оклада (можно частями)</span>
+          <a href="https://t.me/catdem" class="btn-card">Обсудить условия</a>
         </div>
-        <div class="card">
-          <div class="card-title">“Мок-собес оказался полезнее реальных”</div>
-          <p>
-            “На мок-собеседовании было сложнее, чем на настоящих собесах,
-            зато после фидбека я понимала, что исправлять. В итоге получила два
-            оффера и смогла спокойно торговаться по вилке.”
-          </p>
-          <p style="font-size: 12px; color: var(--muted);">
-            — М., junior → middle data engineer
-          </p>
-        </div>
-      </div>
-      <p style="margin-top: 10px; font-size: 13px; color: var(--muted);">
-        Хочешь оставить отзыв или спросить, могу ли помочь в твоём кейсе? Напиши
-        мне в Telegram.
-      </p>
-    </section> -->
+      </article>
 
-    <!-- FAQ -->
-    <section class="section" id="faq">
-      <div class="section-kicker">FAQ</div>
-      <h2 class="section-title">Частые вопросы</h2>
-      <div class="faq-item">
-        <div class="faq-q">Нужен ли мне уже опыт в данных, чтобы прийти?</div>
-        <div class="faq-a">
-          Не обязательно. Важно, чтобы у тебя была честная картинка: чем ты
-          уже занимался, что пробовал, какие темы даются легче/сложнее. На
-          созвоне разберёмся, откуда стартовать.
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Гарантируешь ли ты оффер / рост зарплаты?</div>
-        <div class="faq-a">
-          Я не продаю “гарантированный оффер”. Моя зона ответственности —
-          честный фидбек, план и помощь в подготовке. Результат зависит и от
-          твоих действий между созвонами.
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Можем ли мы поработать анонимно?</div>
-        <div class="faq-a">
-          Да, можно не называть компанию и реальные имена, если так комфортнее.
-          Главное — чтобы у меня было достаточно контекста, чтобы помочь.
-        </div>
-      </div>
-    </section>
+    </div>
 
-    <!-- КОНТАКТЫ -->
-    <section class="section" id="contacts">
-      <div class="section-kicker">Контакты</div>
-      <h2 class="section-title">Если откликается — пиши</h2>
-      <p>
-        Расскажи в двух–трёх сообщениях:
-        <strong>кто ты, где сейчас и чего хочешь добиться</strong>. Я отвечу,
-        могу ли помочь, и предложу формат.
-      </p>
-      <ul class="list-dot">
-        <li>
-          Telegram:
-          <a href="https://t.me/catdem" target="_blank" rel="noopener">
-            @catdem
-          </a>
-        </li>
-        <!-- <li>Email: <a href="mailto:you@example.com">you@example.com</a></li>
-        <li>
-          GitHub:
-          <a href="https://github.com/YOUR_GITHUB" target="_blank" rel="noopener">
-            github.com/YOUR_GITHUB
-          </a>
-        </li> -->
-      </ul>
-    </section>
+  </div>
 
-    <footer class="footer">
-      Сделано dima_sqlit
-      <a href="#top">Наверх</a>
-    </footer>
-  </main>
+  <footer>
+    <a href="https://t.me/dima_sqlit" target="_blank">© Мой канал в Telegram</a>
+  </footer>
+
 </body>
 </html>
