@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
 
-  <title>Дима SQL-ит — быстрый оффер в Data Analyst</title>
-  <meta name="description" content="Дима SQL-ит — менторство для быстрого оффера в Data Analyst. Помогаю освоить SQL, Python, BI-инструменты, пройти собеседования и выйти на оффер.">
-  <meta name="keywords" content="Data Analyst, SQL, Python, BI, Airflow, Git, аналитик данных, менторство, собеседование, оффер">
-
+  <title>Ментор по Data Analytics, SQL и Python — Дима SQL-ит</title>
+  <meta name="description" content="Менторство для аналитиков данных: SQL, Python, dbt, Airflow, BI, Streamlit, Superset, Redash, собеседования, рост в грейде и переход в Data Analyst.">
+  <meta name="keywords" content="Data Analyst, SQL, Python, BI, dbt, Airflow, Streamlit, Superset, Redash, Git, аналитик данных, менторство, собеседование, оффер, рост в грейде, нейросети, Wildberries, MTS Travel">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -14,408 +13,1013 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
-
   <style>
-
-    /* --- НАСТРОЙКИ --- */
     :root {
-      --bg-dark: #050507;
-      --text-main: #b4bacf;
-      --text-header: #ffffff;
-      
-      --accent-gradient: linear-gradient(135deg, #a45eff 0%, #4f46e5 100%);
-      --accent-color: #a45eff;
-      
-      --price-old: #6e7681;
-      --radius: 20px;
+      --bg: #f4f8fb;
+      --surface: #ffffff;
+      --surface-soft: #edf5fb;
+      --surface-muted: #e4edf5;
+      --line: #cddbe8;
+      --line-strong: #a9c4d8;
+      --text-main: #14202b;
+      --text-soft: #536576;
+      --text-faint: #7d8c99;
+      --accent: #38bdf8;
+      --accent-strong: #0284c7;
+      --accent-soft: rgba(56, 189, 248, 0.15);
+      --warm: #ffd27d;
+      --shadow: 0 24px 70px rgba(14, 116, 144, 0.12);
+      --radius: 18px;
+      --transition: 180ms ease;
+    }
+
+    body[data-theme="dark"] {
+      --bg: #111315;
+      --surface: #181a1d;
+      --surface-soft: #202327;
+      --surface-muted: #282c31;
+      --line: #2d3238;
+      --line-strong: #3d4650;
+      --text-main: #f2f5f7;
+      --text-soft: #a5abb2;
+      --text-faint: #777f88;
+      --accent: #7dd3fc;
+      --accent-strong: #38bdf8;
+      --accent-soft: rgba(125, 211, 252, 0.14);
+      --warm: #ffd37a;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-dark);
-      background-image: radial-gradient(circle at 50% -20%, #2e1065 0%, #050507 60%);
-      background-attachment: fixed;
-      color: var(--text-main);
-      line-height: 1.6;
       min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, rgba(56, 189, 248, 0.18), transparent 34%),
+        linear-gradient(180deg, #f9fcff 0%, var(--bg) 42%, var(--bg) 100%);
+      color: var(--text-main);
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.55;
+      transition: background-color var(--transition), color var(--transition);
+    }
+
+    body[data-theme="dark"] {
+      background:
+        radial-gradient(circle at top right, rgba(56, 189, 248, 0.10), transparent 30%),
+        linear-gradient(180deg, #111315 0%, #14171a 48%, #111315 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .page-shell {
+      width: min(1180px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 26px 0 54px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) auto;
+      align-items: start;
+      gap: 22px;
+      margin-bottom: 52px;
+    }
+
+    .brand {
+      max-width: 760px;
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      margin-bottom: 10px;
+      color: var(--accent-strong);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .brand-name {
+      margin: 0;
+      font-size: clamp(42px, 6vw, 74px);
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .brand-summary {
+      margin: 20px 0 0;
+      max-width: 720px;
+      color: var(--text-soft);
+      font-size: clamp(17px, 2vw, 24px);
+      font-weight: 600;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pill-link,
+    .telegram-button,
+    .theme-trigger {
+      min-height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface-soft);
+      color: var(--text-main);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: transform var(--transition), border-color var(--transition), background-color var(--transition), box-shadow var(--transition);
+    }
+
+    .pill-link:hover,
+    .telegram-button:hover,
+    .theme-trigger:hover {
+      transform: translateY(-1px);
+      border-color: var(--line-strong);
+    }
+
+    .pill-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 18px;
+      font-size: 13px;
+    }
+
+    .telegram-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      min-width: 178px;
+      padding: 0 28px;
+      border: 0;
+      background: linear-gradient(135deg, #e0f7ff, var(--accent), #93e5ff);
+      color: #082532;
+      box-shadow: 0 14px 34px rgba(56, 189, 248, 0.28);
+      font-size: 15px;
+    }
+
+    body[data-theme="dark"] .telegram-button {
+      background: linear-gradient(135deg, #dff7ff, #7dd3fc, #b6ecff);
+      color: #08151d;
+    }
+
+    .telegram-button svg,
+    .pill-link svg {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+      fill: currentColor;
+    }
+
+    .theme-menu {
+      position: relative;
+    }
+
+    .theme-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 16px;
+      cursor: pointer;
+    }
+
+    .theme-swatch {
+      position: relative;
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      border: 1.5px solid currentColor;
+    }
+
+    .theme-swatch--light {
+      background: radial-gradient(circle at center, currentColor 0 30%, transparent 32% 100%);
+      box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 18%, transparent);
+    }
+
+    .theme-swatch--dark {
+      border-color: transparent;
+      background: currentColor;
+      box-shadow: inset 6px 0 0 0 var(--surface-soft);
+    }
+
+    .theme-swatch--system {
+      width: 18px;
+      height: 14px;
+      margin-top: 1px;
+      border-radius: 4px;
+      background: transparent;
+    }
+
+    .theme-swatch--system::after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      bottom: -4px;
+      width: 6px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+
+    .theme-popover {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      z-index: 30;
+      width: 188px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-4px);
+      transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+    }
+
+    .theme-popover.is-open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .theme-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      min-height: 46px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-soft);
+      cursor: pointer;
+      text-align: left;
+      font-weight: 800;
+    }
+
+    .theme-option:hover,
+    .theme-option.is-active {
+      background: var(--surface-soft);
+      color: var(--text-main);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 48px;
+      align-items: center;
+      margin-bottom: 64px;
+    }
+
+    .intro-card {
+      display: grid;
+      gap: 22px;
+    }
+
+    .facts {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .facts-label {
+      display: inline-flex;
+      align-items: center;
+      justify-self: start;
+      min-height: 32px;
+      padding: 0 14px;
+      border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--line) 66%);
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .fact-item {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: flex-start;
+      gap: 14px;
+      min-height: 70px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--surface) 76%, transparent);
+      color: var(--text-soft);
+      font-size: 16px;
+      font-weight: 650;
+    }
+
+    .fact-dot {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 auto;
+      margin-top: 2px;
+      border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--line) 66%);
+      border-radius: 12px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 32px;
+      text-align: center;
+    }
+
+    .fact-item strong {
+      color: var(--text-main);
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .primary-action,
+    .secondary-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 54px;
+      padding: 0 24px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), background-color var(--transition);
+    }
+
+    .primary-action {
+      border: 0;
+      background: linear-gradient(135deg, #e0f7ff, var(--accent), #93e5ff);
+      color: #082532;
+      box-shadow: 0 14px 34px rgba(56, 189, 248, 0.28);
+    }
+
+    .secondary-action {
+      border: 1px solid var(--line);
+      background: var(--surface-soft);
+      color: var(--text-main);
+    }
+
+    .primary-action:hover,
+    .secondary-action:hover {
+      transform: translateY(-2px);
+      border-color: var(--line-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .profile-card {
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .profile-photo {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      background: var(--surface-muted);
+    }
+
+    .profile-body {
+      padding: 20px;
+    }
+
+    .profile-body strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .profile-body span {
+      display: block;
+      margin-top: 8px;
+      color: var(--text-soft);
+      font-weight: 700;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .section-caption {
+      max-width: 420px;
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 16px;
+      font-weight: 650;
+      text-align: right;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .seo-block {
+      margin-top: 42px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: color-mix(in srgb, var(--surface) 82%, transparent);
+      box-shadow: 0 16px 42px rgba(0, 0, 0, 0.04);
+    }
+
+    .seo-block h3 {
+      margin: 0 0 14px;
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .seo-block p {
+      max-width: 920px;
+      margin: 0 0 14px;
+      color: var(--text-soft);
+      font-size: 16px;
+    }
+
+    .seo-block p:last-child {
+      margin-bottom: 0;
+    }
+
+    .service-card {
       display: flex;
       flex-direction: column;
-    }
-
-    a { text-decoration: none; color: inherit; transition: 0.3s; }
-    ul { list-style: none; padding: 0; margin: 0; }
-    * { box-sizing: border-box; }
-
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 0 20px;
-      width: 100%;
-    }
-
-    /* --- HERO СЕКЦИЯ --- */
-    .hero {
-      text-align: center;
-      padding-top: 80px;
-      padding-bottom: 60px;
-    }
-
-    .avatar-wrapper {
+      min-width: 0;
+      min-height: 100%;
       position: relative;
-      width: 150px;
-      height: 150px;
-      margin: 0 auto 24px;
+      overflow: hidden;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--surface) 92%, var(--accent) 8%) 0%, var(--surface) 44%),
+        var(--surface);
+      box-shadow: 0 16px 42px rgba(0, 0, 0, 0.05);
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), background-color var(--transition);
     }
 
-    .avatar-glow {
+    .service-card::before {
+      content: "";
       position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%; height: 100%;
-      border-radius: 50%;
-      background: var(--accent-gradient);
-      filter: blur(25px);
-      opacity: 0.6;
-      z-index: 0;
+      inset: 0 0 auto;
+      height: 5px;
+      background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--warm) 70%, var(--accent) 30%));
     }
 
-    .avatar {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid rgba(255,255,255,0.1); 
-      z-index: 1;
-      background: #111;
+    body[data-theme="dark"] .service-card {
+      box-shadow: 0 16px 42px rgba(0, 0, 0, 0.24);
     }
 
-    .hero-name {
-      font-size: 40px;
-      font-weight: 800;
-      color: var(--text-header);
-      margin: 0 0 24px;
-      letter-spacing: -0.5px;
+    .service-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(56, 189, 248, 0.45);
+      box-shadow: var(--shadow);
     }
 
-    .hero-name span {
-      background: var(--accent-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* --- БЛОК С ОПЫТОМ --- */
-    .hero-facts {
-      margin: 0 auto 36px auto;
-      max-width: 620px;
+    .service-topline {
       display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .service-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 12px;
+      border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--line) 66%);
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: lowercase;
+    }
+
+    .service-number {
+      display: inline-grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--surface-soft);
+      color: var(--text-faint);
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .service-card h3 {
+      margin: 0 0 14px;
+      color: var(--text-main);
+      font-size: clamp(24px, 2vw, 30px);
+      line-height: 1.08;
+      text-wrap: balance;
+    }
+
+    .service-body {
+      display: flex;
+      flex: 1;
       flex-direction: column;
       gap: 18px;
     }
 
-    .fact-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      text-align: left;
-    }
-    
-    .fact-icon { 
-      width: 24px;
-      text-align: center;
-      font-size: 20px; 
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    
-    .fact-text {
-      color: #d1d5db;
-      font-size: 16px;
-      line-height: 1.5;
+    .service-body p {
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 15px;
     }
 
-    .fact-highlight { color: #fff; font-weight: 600; }
-
-    /* --- КНОПКИ --- */
-    .buttons-wrapper {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn-main {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--accent-gradient);
-      color: white;
-      padding: 14px 32px;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 16px;
-      box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.5);
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-    
-    .btn-main:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 15px 35px -5px rgba(124, 58, 237, 0.7);
-    }
-
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.05);
-      color: white;
-      padding: 14px 32px;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 16px;
-      border: 1px solid rgba(164, 94, 255, 0.6);
-      transition: all 0.3s ease;
-    }
-
-    .btn-outline:hover {
-      background: rgba(164, 94, 255, 0.15);
-      border-color: #a45eff;
-      transform: translateY(-3px);
-    }
-
-    /* --- СЕКЦИЯ УСЛУГ --- */
-    .section-title {
-      text-align: center;
-      font-size: 26px;
-      color: var(--text-header);
-      margin-bottom: 40px;
-      font-weight: 700;
-    }
-
-    .grid {
+    .service-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      margin-bottom: 80px;
-    }
-
-    .card {
-      background: linear-gradient(160deg, rgba(30, 30, 40, 0.6) 0%, rgba(20, 20, 25, 0.8) 100%);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: var(--radius);
-      padding: 28px;
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card:hover {
-      transform: translateY(-7px);
-      border-color: rgba(164, 94, 255, 0.5);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 
-                  0 0 20px rgba(164, 94, 255, 0.1) inset;
-    }
-
-    .card-icon { font-size: 32px; margin-bottom: 16px; }
-    
-    .card-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-header);
-      margin: 0 0 10px;
-    }
-
-    .card-text {
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: var(--text-soft);
       font-size: 14px;
-      color: #9ca3af;
-      margin-bottom: 24px;
-      flex-grow: 1;
-      line-height: 1.5;
+      font-weight: 650;
+    }
+
+    .service-list li {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .service-list li::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 0;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
     }
 
     .price-block {
       margin-top: auto;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 18px;
+      border-top: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface-soft);
     }
 
     .price-row {
       display: flex;
+      flex-wrap: wrap;
       align-items: baseline;
       gap: 10px;
-      margin-bottom: 4px;
+      margin-bottom: 10px;
     }
 
-    .price-current { font-size: 22px; font-weight: 700; color: #fff; }
-    .price-old { text-decoration: line-through; color: var(--price-old); font-size: 15px; }
-    .price-note { font-size: 12px; color: #a45eff; display: block; margin-top: 4px; }
+    .price-current {
+      color: var(--text-main);
+      font-size: 26px;
+      font-weight: 900;
+    }
 
-    .btn-card {
+    .price-old {
+      color: var(--text-faint);
+      font-size: 15px;
+      text-decoration: line-through;
+    }
+
+    .price-meta {
+      color: var(--text-faint);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .price-note {
       display: block;
-      width: 100%;
-      text-align: center;
-      margin-top: 16px;
-      padding: 10px 0;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.05);
-      color: #fff;
-      font-weight: 500;
-      font-size: 14px;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
-    .btn-card:hover { background: rgba(255,255,255,0.1); }
-
-    footer {
-      margin-top: auto;
-      text-align: center;
-      padding: 40px 20px;
-      color: #6b7280;
+      margin-bottom: 12px;
+      color: var(--accent-strong);
       font-size: 13px;
-    }
-    footer a:hover { color: #fff; }
-
-    @media (max-width: 600px) {
-      .hero-name { font-size: 32px; }
-      .grid { grid-template-columns: 1fr; }
-      .hero-facts { padding: 0 10px; }
-      .buttons-wrapper { flex-direction: column; align-items: stretch; padding: 0 40px; }
+      font-weight: 800;
     }
 
-
-      .hero-subtitle {
-    margin-top: -12px;
-    margin-bottom: 28px;
-    font-size: 16px;
-    color: #9ca3af;
-    text-align: center;
+    .card-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 48px;
+      border-radius: 999px;
+      background: var(--text-main);
+      color: var(--surface);
+      font-weight: 900;
+      transition: transform var(--transition), background-color var(--transition), box-shadow var(--transition);
     }
 
-
-      .card-subtitle {
-    font-size: 13px;
-    color: #9ca3af;
-    margin-top: -6px;
-    margin-bottom: 12px;
+    .card-action:hover {
+      transform: translateY(-1px);
+      background: var(--accent-strong);
+      box-shadow: 0 14px 30px rgba(56, 189, 248, 0.22);
     }
 
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 58px;
+      padding-top: 26px;
+      border-top: 1px solid var(--line);
+      color: var(--text-faint);
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: var(--accent-strong);
+      font-weight: 800;
+    }
+
+    @media (max-width: 980px) {
+      .topbar,
+      .hero-grid,
+      .section-heading {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        display: grid;
+      }
+
+      .nav {
+        justify-content: flex-start;
+      }
+
+      .profile-card {
+        max-width: 360px;
+        justify-self: center;
+      }
+
+      .section-heading {
+        display: grid;
+      }
+
+      .section-caption {
+        text-align: left;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .seo-block {
+        margin-top: 32px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page-shell {
+        width: min(100% - 20px, 1180px);
+        padding-top: 18px;
+      }
+
+      .topbar {
+        margin-bottom: 36px;
+      }
+
+      .brand-name {
+        font-size: 40px;
+      }
+
+      .brand-summary {
+        font-size: 17px;
+      }
+
+      .nav,
+      .action-row {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .telegram-button,
+      .pill-link,
+      .theme-trigger,
+      .primary-action,
+      .secondary-action {
+        width: 100%;
+      }
+
+      .theme-popover {
+        left: 0;
+        right: auto;
+        width: 100%;
+      }
+
+      .hero-grid {
+        gap: 32px;
+        margin-bottom: 48px;
+      }
+
+      .section-heading {
+        text-align: center;
+      }
+
+      .section-caption {
+        max-width: 100%;
+        text-align: center;
+      }
+
+      .profile-card {
+        max-width: min(100%, 340px);
+        margin: 0 auto;
+      }
+
+      .profile-body {
+        text-align: center;
+      }
+
+      .seo-block {
+        padding: 22px 18px;
+      }
+
+      .footer {
+        display: grid;
+      }
+    }
   </style>
 </head>
 <body>
-
-  <div class="container">
-    
-    <section class="hero">
-      <div class="avatar-wrapper">
-        <div class="avatar-glow"></div>
-        <img src="photo.png" alt="Дима SQL-ит" class="avatar">
-      </div>
-      
-      <!-- <h1 class="hero-name">Дима <span>SQL-ит</span></h1> -->
-      <h1 class="hero-name">Дима <span>SQL-ит</span></h1>
-      <p class="hero-subtitle">
-        Менторство и подготовка к быстрому офферу в Data Analyst
-      </p>
-
-      <div class="hero-facts">
-        <div class="fact-item">
-           <div class="fact-icon">🟣</div> 
-           <div class="fact-text">
-             Работаю Data Analyst в <span class="fact-highlight">Wildberries</span>. Строю дашборды, автоматизирую ad-hoc задачи и провожу исследования.
-           </div>
-        </div>
-        
-        <div class="fact-item">
-           <div class="fact-icon">✈️</div> 
-           <div class="fact-text">
-             Ранее строил отчетность и занимался автоматизацией в <span class="fact-highlight">MTS Travel</span>.
-           </div>
-        </div>
-
-        <div class="fact-item">
-           <div class="fact-icon">🎓</div> 
-           <div class="fact-text">
-             Обучаю коллег, менторю аналитиков и веду канал <span class="fact-highlight">"Дима SQL-ит"</span> (1700+ подписчиков).
-           </div>
-        </div>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">Dima SQL-it mentoring</span>
+        <h1 class="brand-name">Менторство для Data Analyst</h1>
+        <p class="brand-summary">Помогаю аналитикам расти в грейде, увереннее проходить собеседования и сильнее использовать SQL, Python, BI, dbt, Airflow, Streamlit, Superset, Redash и нейросети в реальной работе.</p>
       </div>
 
-      <div class="buttons-wrapper">
-        <a href="https://t.me/catdem" class="btn-main">
-            Telegram для связи
+      <nav class="nav" aria-label="Главная навигация">
+        <div class="theme-menu">
+          <button class="theme-trigger" id="theme-trigger" type="button" aria-expanded="false" aria-controls="theme-popover">
+            <span class="theme-swatch theme-swatch--system" id="theme-trigger-swatch" aria-hidden="true"></span>
+            <span id="theme-label">Системная</span>
+          </button>
+          <div class="theme-popover" id="theme-popover">
+            <button class="theme-option" data-theme-choice="light" type="button">
+              <span class="theme-swatch theme-swatch--light" aria-hidden="true"></span>
+              Светлая
+            </button>
+            <button class="theme-option" data-theme-choice="dark" type="button">
+              <span class="theme-swatch theme-swatch--dark" aria-hidden="true"></span>
+              Темная
+            </button>
+            <button class="theme-option" data-theme-choice="system" type="button">
+              <span class="theme-swatch theme-swatch--system" aria-hidden="true"></span>
+              Системная
+            </button>
+          </div>
+        </div>
+
+        <a class="pill-link" href="https://dima-sqlit.ru/">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H7.5A1.5 1.5 0 0 0 6 20.5V21a1 1 0 1 1-2 0V4.5ZM6 17.34c.46-.22.97-.34 1.5-.34H18V4H6.5a.5.5 0 0 0-.5.5v12.84ZM8 7h8v2H8V7Zm0 4h8v2H8v-2Z"/></svg>
+          База знаний
         </a>
-        <a href="https://t.me/dima_sqlit" target="_blank" class="btn-outline">
-          Telegram-канал
+        <a class="telegram-button" href="https://t.me/catdem" target="_blank" rel="noopener noreferrer">
+          Telegram
+          <span aria-hidden="true">→</span>
         </a>
-      </div>
+      </nav>
+    </header>
 
-    </section>
+    <main>
+      <section class="hero-grid" aria-label="О менторе">
+        <div class="intro-card">
+          <span class="facts-label">Обо мне</span>
+          <ul class="facts">
+            <li class="fact-item">
+              <span class="fact-dot" aria-hidden="true">01</span>
+              <span><strong>Работаю аналитиком данных в Wildberries.</strong> Строю дашборды, провожу ad-hoc аналитику, автоматизирую процессы и занимаюсь исследованиями на реальных бизнес-задачах.</span>
+            </li>
+            <li class="fact-item">
+              <span class="fact-dot" aria-hidden="true">02</span>
+              <span><strong>До этого работал в MTS Travel.</strong> Строил отчетность, занимался автоматизацией и хорошо понимаю, как устроены аналитические процессы внутри команды.</span>
+            </li>
+            <li class="fact-item">
+              <span class="fact-dot" aria-hidden="true">03</span>
+              <span><strong>Параллельно обучаю и менторю.</strong> Обучаю коллег, менторю аналитиков и веду канал «Дима SQL-ит» для 1700+ подписчиков, где делюсь практикой по SQL, Python, BI и работе с нейросетями.</span>
+            </li>
+          </ul>
 
-    <h2 class="section-title">С чем могу помочь:</h2>
-    
-    <div class="grid">
-      
-      <article class="card">
-        <div class="card-icon">🚀</div>
-        <h3 class="card-title">Разовая консультация</h3>
-        <p class="card-text">
-          Работаем 60–90 минут строго по твоему запросу. Решаем конкретные задачи, а не льем воду.
-          <br><br>
-          <b>С чем можно прийти:</b><br>
-          🛠 <b>Техника:</b> SQL, Python (Airflow, Streamlit), Git, Crontab, BI (Superset, Redash) и т.п. <br>
-          🚀 <b>Карьера:</b> Оценка уровня, план перехода в Аналитику и т.п.
-        </p>
-        <div class="price-block">
-          <div class="price-row">
-            <span class="price-current">4 000 ₽</span>
-            <span class="price-old">6 000 ₽</span>
+          <div class="action-row">
+            <a class="primary-action" href="https://t.me/catdem" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+            <a class="secondary-action" href="https://dima-sqlit.ru/">Перейти на базу знаний</a>
+            <a class="secondary-action" href="https://t.me/dima_sqlit" target="_blank" rel="noopener noreferrer">Канал Дима SQL-ит</a>
           </div>
-          <a href="https://t.me/catdem" class="btn-card">Записаться</a>
         </div>
-      </article>
 
-      <article class="card">
-        <div class="card-icon">⚔️</div>
-        <h3 class="card-title">Мок-собеседование</h3>
-        <p class="card-text">
-          Жесткий прогон по SQL, Python и задачам. Атмосфера реального собеса.
-          Подробный фидбек: где провал, что учить, как отвечать лучше.
-        </p>
-        <div class="price-block">
-          <div class="price-row">
-            <span class="price-current">5 000 ₽</span>
-            <span class="price-old">7 000 ₽</span>
+        <aside class="profile-card" aria-label="Профиль">
+          <img class="profile-photo" src="photo.png" alt="Дима SQL-ит">
+          <div class="profile-body">
+            <strong>Дима SQL-ит</strong>
+            <span>Wildberries, MTS Travel, рост в грейде, собеседования и AI-инструменты для аналитиков</span>
           </div>
-          <a href="https://t.me/catdem" class="btn-card">Записаться</a>
+        </aside>
+      </section>
+
+      <section aria-label="Услуги">
+        <div class="section-heading">
+          <h2 class="section-title">С чем могу помочь</h2>
+          <p class="section-caption">Можно прийти с конкретной задачей, планом роста, подготовкой к собесу или желанием встроить AI в рабочий процесс.</p>
         </div>
-      </article>
 
-      <article class="card">
-        <div class="card-icon">📈</div>
-        <h3 class="card-title">Менторство до оффера</h3>
-        <p class="card-text">
-          Системная работа. План обучения, домашки, код-ревью и поддержка 24/7.
-          Веду тебя за руку до трудоустройства.
-        </p>
-        <div class="price-block">
-          <div class="price-row">
-            <span class="price-current">30 000 ₽</span>
-            <span style="font-size: 13px; color: #fff; opacity: 0.7;">(предоплата)</span>
-          </div>
-          <span class="price-note">+ 100–150% от оклада (можно частями)</span>
-          <a href="https://t.me/catdem" class="btn-card">Обсудить условия</a>
+        <div class="services-grid">
+          <article class="service-card">
+            <div class="service-topline">
+              <span class="service-chip">консультация</span>
+              <span class="service-number">01</span>
+            </div>
+            <div class="service-body">
+              <h3>Разовая консультация</h3>
+              <p>Точечная сессия, где за 60-90 минут раскладываем проблему, находим узкое место и собираем понятные следующие шаги по аналитике, стеку и карьерному росту.</p>
+              <ul class="service-list">
+                <li>Разбор SQL, Python, BI, dbt, Airflow, Streamlit, Superset, Redash и автоматизации</li>
+                <li>Оценка текущего уровня и пробелов до следующего грейда</li>
+                <li>План обучения без лишних курсов и распыления по нужным инструментам</li>
+              </ul>
+              <div class="price-block">
+                <div class="price-row">
+                  <span class="price-current">4 000 ₽</span>
+                  <span class="price-old">6 000 ₽</span>
+                </div>
+                <a href="https://t.me/catdem" class="card-action" target="_blank" rel="noopener noreferrer">Записаться</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <div class="service-topline">
+              <span class="service-chip">собеседование</span>
+              <span class="service-number">02</span>
+            </div>
+            <div class="service-body">
+              <h3>Мок-собеседование</h3>
+              <p>Проводим собеседование как в найме: проверяем техническую базу, мышление аналитика и способность объяснять решения на языке бизнеса и данных.</p>
+              <ul class="service-list">
+                <li>SQL, Python, продуктовые метрики, BI и аналитические кейсы</li>
+                <li>Вопросы по стеку: dbt, Airflow, Streamlit, Superset, Redash и рабочим инструментам</li>
+                <li>Фидбек по структуре ответов, уверенности, глубине и карте подготовки</li>
+              </ul>
+              <div class="price-block">
+                <div class="price-row">
+                  <span class="price-current">5 000 ₽</span>
+                  <span class="price-old">7 000 ₽</span>
+                </div>
+                <a href="https://t.me/catdem" class="card-action" target="_blank" rel="noopener noreferrer">Записаться</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <div class="service-topline">
+              <span class="service-chip">до оффера</span>
+              <span class="service-number">03</span>
+            </div>
+            <div class="service-body">
+              <h3>Менторство до оффера</h3>
+              <p>Длинный формат для тех, кто хочет расти системно: в навыках, доходе, грейде или переходе в аналитику, а также увереннее работать с современным стеком.</p>
+              <ul class="service-list">
+                <li>Индивидуальная программа по SQL, Python, BI, dbt, Airflow, Streamlit, Superset, Redash и AI-инструментам</li>
+                <li>Домашки, код-ревью, разбор ошибок и регулярная обратная связь по реальным задачам</li>
+                <li>Подготовка к повышению, поиску работы, сильным интервью и более высокой роли в команде</li>
+              </ul>
+              <div class="price-block">
+                <div class="price-row">
+                  <span class="price-current">30 000 ₽</span>
+                  <span class="price-meta">предоплата</span>
+                </div>
+                <span class="price-note">+ 100-150% от оклада, можно частями</span>
+                <a href="https://t.me/catdem" class="card-action" target="_blank" rel="noopener noreferrer">Обсудить условия</a>
+              </div>
+            </div>
+          </article>
         </div>
-      </article>
 
-    </div>
+        <div class="seo-block">
+          <h3>Менторство по SQL, Python и стеку аналитика</h3>
+          <p>Ко мне приходят, когда нужно не просто получить ответ на один вопрос, а быстрее вырасти в аналитике данных: усилить SQL и Python, подготовиться к собеседованию, разобраться в BI, понять, как двигаться к следующему грейду или перейти в Data Analyst из смежной роли.</p>
+          <p>На консультациях и в менторстве можно разбирать рабочие задачи и инструменты, с которыми аналитики сталкиваются каждый день: dbt, Airflow, Streamlit, Superset, Redash, автоматизация отчетности, ad-hoc аналитика, дашборды, исследования и использование нейросетей в реальной работе.</p>
+          <p>Если нужен не абстрактный курс, а живая помощь от практикующего аналитика из Wildberries с опытом в MTS Travel, можно прийти как с точечной задачей, так и за системной поддержкой до повышения, смены работы или оффера.</p>
+        </div>
+      </section>
+    </main>
 
+    <footer class="footer">
+      <span>© Дима SQL-it. Менторство для аналитиков и тех, кто хочет быстрее дойти до оффера.</span>
+      <span><a href="https://t.me/dima_sqlit" target="_blank" rel="noopener noreferrer">Telegram</a> · <a href="https://dima-sqlit.ru/">База знаний</a></span>
+    </footer>
   </div>
 
-  <footer>
-    <a href="https://t.me/dima_sqlit" target="_blank">© Мой канал в Telegram</a>
-  </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeTrigger = document.getElementById('theme-trigger');
+      const themeTriggerSwatch = document.getElementById('theme-trigger-swatch');
+      const themeLabel = document.getElementById('theme-label');
+      const themePopover = document.getElementById('theme-popover');
+      const themeOptions = Array.from(document.querySelectorAll('.theme-option'));
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const storageKey = 'dima-sqlit-theme';
+      const labels = {
+        light: 'Светлая',
+        dark: 'Темная',
+        system: 'Системная'
+      };
 
+      const applyTheme = (choice) => {
+        const resolved = choice === 'system' ? (mediaQuery.matches ? 'dark' : 'light') : choice;
+        document.body.dataset.theme = resolved;
+        themeLabel.textContent = labels[choice];
+        themeTriggerSwatch.className = `theme-swatch theme-swatch--${choice}`;
+        themeOptions.forEach((option) => {
+          option.classList.toggle('is-active', option.dataset.themeChoice === choice);
+        });
+      };
+
+      const storedTheme = localStorage.getItem(storageKey) || 'system';
+      applyTheme(storedTheme);
+
+      themeTrigger.addEventListener('click', () => {
+        const isOpen = themePopover.classList.toggle('is-open');
+        themeTrigger.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      themeOptions.forEach((option) => {
+        option.addEventListener('click', () => {
+          const choice = option.dataset.themeChoice;
+          localStorage.setItem(storageKey, choice);
+          applyTheme(choice);
+          themePopover.classList.remove('is-open');
+          themeTrigger.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      mediaQuery.addEventListener('change', () => {
+        const current = localStorage.getItem(storageKey) || 'system';
+        if (current === 'system') {
+          applyTheme(current);
+        }
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!themeTrigger.contains(event.target) && !themePopover.contains(event.target)) {
+          themePopover.classList.remove('is-open');
+          themeTrigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
