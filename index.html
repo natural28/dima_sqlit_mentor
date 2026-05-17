@@ -558,42 +558,6 @@
       font-weight: 700;
     }
 
-    /* metrics row */
-    .metrics-row {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-      margin: 8px 0 64px;
-      padding: 22px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: color-mix(in srgb, var(--surface) 70%, transparent);
-      backdrop-filter: blur(6px);
-    }
-
-    .metric-cell {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      padding: 6px 10px;
-      border-left: 2px solid var(--accent);
-    }
-
-    .metric-cell:first-child { border-left: 0; padding-left: 0; }
-
-    .metric-value {
-      font-size: clamp(22px, 2.4vw, 30px);
-      font-weight: 900;
-      letter-spacing: -0.01em;
-      color: var(--text-main);
-    }
-
-    .metric-label {
-      color: var(--text-soft);
-      font-size: 13px;
-      font-weight: 700;
-    }
-
     /* sections */
     .section { margin-bottom: 72px; }
 
@@ -1007,8 +971,6 @@
 
     /* responsive */
     @media (max-width: 1080px) {
-      .metrics-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .metric-cell { border-left: 0; padding-left: 0; }
       .process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
@@ -1062,7 +1024,6 @@
       .theme-popover { left: 0; right: auto; width: 100%; }
 
       .hero-grid { gap: 32px; margin-bottom: 28px; }
-      .metrics-row { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 18px; }
       .process-grid { grid-template-columns: 1fr; }
 
       .section-heading { text-align: center; }
@@ -1156,25 +1117,6 @@
             <span>Wildberries, MTS Travel, рост в грейде, собеседования и AI-инструменты для аналитиков</span>
           </div>
         </aside>
-      </section>
-
-      <section class="metrics-row reveal" aria-label="Цифры">
-        <div class="metric-cell">
-          <span class="metric-value">1700+</span>
-          <span class="metric-label">подписчиков канала</span>
-        </div>
-        <div class="metric-cell">
-          <span class="metric-value">5+ лет</span>
-          <span class="metric-label">в аналитике данных</span>
-        </div>
-        <div class="metric-cell">
-          <span class="metric-value">2</span>
-          <span class="metric-label">продуктовые компании в опыте</span>
-        </div>
-        <div class="metric-cell">
-          <span class="metric-value">10+</span>
-          <span class="metric-label">инструментов в работе</span>
-        </div>
       </section>
 
       <section class="section reveal" aria-label="Кому подойдёт">
